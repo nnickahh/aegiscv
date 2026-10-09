@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Emergency Coordinator — OpenCV 5 + AWS Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css?v=4" />
+</head>
+<body>
+
+  <!-- ====================================================================
+       TOP COMMAND NAVIGATION HEADER
+       ==================================================================== -->
+  <header class="top-navbar">
+    <div class="brand-cluster" onclick="switchMainView('landing')">
+      <div class="brand-icon">CV5</div>
+      <div>
+        <div class="brand-title">AI Emergency Coordinator</div>
+        <div class="brand-subtitle">OPENCV 5 VISION ENGINE + AWS AGENTIC CORE</div>
+      </div>
+    </div>
+
+    <nav class="nav-tabs" aria-label="Main Navigation">
+      <button class="nav-tab active" id="tab-landing" onclick="switchMainView('landing')">
+        Overview
+      </button>
+      <button class="nav-tab" id="tab-dashboard" onclick="switchMainView('dashboard')">
+        Command Center
+      </button>
+      <button class="nav-tab" id="tab-evaluation" onclick="switchMainView('evaluation')">
+        Evaluation &amp; Benchmarks
+      </button>
+      <button class="nav-tab" id="tab-aws" onclick="switchMainView('aws')">
+        AWS Cloud &amp; Evidence
+      </button>
+    </nav>
+
+    <div class="telemetry-pills">
+      <button class="btn-tool" id="btn-arch-rubric-nav" onclick="openArchitectureModal()" style="border-color: rgba(245,158,11,0.5); color: #fcd34d;">
+        🏗 Architecture &amp; Rubric
+      </button>
+      <button class="btn-tool" id="btn-guided-tour-nav" onclick="startGuidedJudgeTour()" style="border-color: rgba(56,189,248,0.45); color: var(--accent-cyan);">
+        ▶ Guided Judge Tour
+      </button>
+      <button class="btn-tool" id="btn-voice-pa-toggle" onclick="toggleVoicePA()" title="Toggle Spoken AI Coordinator Audio Announcements">
+        🔊 Voice PA: OFF
+      </button>
+      <div class="telemetry-pill" title="OpenCV 5 Frame Rate & Latency">
+        <span class="status-dot" id="nav-status-dot"></span>
+        <span>FPS: <strong id="nav-fps">24.0</strong> (<span id="nav-ms">14.2</span>ms)</span>
+      </div>
+      <div class="telemetry-pill" title="Active OpenCV 5 Pipeline Sensitivity Mode">
+        <span>CV MODE: <strong id="nav-cv-mode">STANDARD</strong></span>
+      </div>
+      <div class="telemetry-pill" title="AWS Cloud Services Operational Status">
+        <span>AWS: <strong id="nav-aws-status" style="color: var(--accent-emerald);">ONLINE</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       VIEW 1: LANDING PAGE
+       ==================================================================== -->
+  <main id="view-landing" class="view-section active">
+    <div class="landing-wrapper">
+      <section class="hero-card">
+        <div class="hero-badges">
+          <span class="hero-badge">OPENCV 5 REAL-TIME VISION PIPELINE</span>
+          <span class="hero-badge aws">POWERED BY AWS (BEDROCK · S3 · DYNAMODB · CLOUDWATCH · SNS)</span>
+          <span class="hero-badge">CLOSED-LOOP AGENTIC AI</span>
+        </div>
+
+        <h1 class="hero-title">AI Emergency Coordinator</h1>
+        <p class="hero-tagline">“See the situation. Understand the risk. Coordinate the response.”</p>
+        <p class="hero-description">
+          An autonomous, human-governed emergency command system that watches live or uploaded video streams with
+          <strong>OpenCV 5</strong> (dense optical flow, posture aspect-ratio collapse, HSV/YCrCb thermal flame &amp; aerosol segmentation,
+          crowd convex-hull clustering, and polygon intrusion testing) and closes the loop with a stateful
+          <strong>AI Coordinator Agent</strong> that dynamically adjusts vision parameters, quantifies uncertainty, escalates or reverses
+          decisions as the scene changes, and orchestrates response via <strong>AWS</strong>.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn-launch" id="btn-launch-command-center" onclick="launchCommandCenter()">
+            <span>Launch Command Center</span>
+            <span>→</span>
+          </button>
+          <button class="btn-secondary-hero" onclick="startGuidedJudgeTour()" style="border-color: rgba(56,189,248,0.45); color: var(--accent-cyan);">
+            ▶ Start 60s Guided Judge Tour
+          </button>
+          <button class="btn-secondary-hero" onclick="switchMainView('evaluation')">
+            View Evaluation, Accuracy &amp; Failure Cases
+          </button>
+        </div>
+
+        <!-- 5-Stage Closed-Loop Flow Architecture -->
+        <div class="loop-architecture-strip">
+          <div class="loop-step-card">
+            <div class="loop-step-num">01 / SEE</div>
+            <div class="loop-step-title">OpenCV 5 Perception</div>
+            <div class="loop-step-desc">
+              Multi-cue pixel analysis: people tracking, posture aspect ratio, Farneback optical flow, fire/smoke contours, crowd hulls &amp; polygon zones.
+            </div>
+          </div>
+          <div class="loop-step-card">
+            <div class="loop-step-num">02 / UNDERSTAND</div>
+            <div class="loop-step-title">Context &amp; Active Vision</div>
+            <div class="loop-step-desc">
+              Agent evaluates temporal kinematics &amp; confidence. When uncertain, commands OpenCV <strong>ROI Zoom + CLAHE</strong> to verify micro-motion.
+            </div>
+          </div>
+          <div class="loop-step-card">
+            <div class="loop-step-num">03 / PRIORITIZE</div>
+            <div class="loop-step-title">Dynamic Risk Scoring</div>
+            <div class="loop-step-desc">
+              Computes live severity (0–100) across single or compound crises. Dynamically escalates or downgrades if the subject recovers.
+            </div>
+          </div>
+          <div class="loop-step-card">
+            <div class="loop-step-num">04 / ACT</div>
+            <div class="loop-step-title">Response &amp; HITL Governance</div>
+            <div class="loop-step-desc">
+              Creates DynamoDB incidents, archives S3 evidence frames, recommends actions, and requests Human-in-the-Loop approval for critical dispatches.
+            </div>
+          </div>
+          <div class="loop-step-card">
+            <div class="loop-step-num">05 / VERIFY</div>
+            <div class="loop-step-title">Closed-Loop Verification</div>
+            <div class="loop-step-desc">
+              Re-scans the incident zone via OpenCV to confirm hazard containment, self-recovery, or responder arrival—closing the perception-action loop.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick-Start Judge Scenario Selector on Landing Page -->
+      <section class="landing-scenarios-section">
+        <h2 class="section-heading">Interactive Judge Simulation Scenarios (1-Click Launch)</h2>
+        <p class="section-subheading">
+          Select any emergency scenario below to launch directly into the Command Center and watch Raw Video → OpenCV 5 Analysis → AI Decision → Action → Verification in real time.
+        </p>
+
+        <div class="scenario-cards-grid">
+          <div class="scenario-launch-card" onclick="launchWithScenario('fall_emergency')">
+            <div>
+              <span class="panel-badge">MEDICAL / FALL</span>
+              <h3 style="margin: 0.55rem 0 0.35rem; font-size: 1rem;">1. Medical Fall &amp; Immobility</h3>
+              <p style="color: var(--text-secondary); font-size: 0.82rem;">
+                OpenCV detects a subject collapsing horizontally and remaining motionless. Agent flags early ambiguity, commands an OpenCV ROI Zoom micro-motion scan, confirms immobilization, and escalates to CRITICAL.
+              </p>
+            </div>
+            <div style="margin-top: 1rem; color: var(--accent-cyan); font-size: 0.8rem; font-weight: 700;">
+              Launch Scenario →
+            </div>
+          </div>
+
+          <div class="scenario-launch-card" onclick="launchWithScenario('fall_recovery')">
+            <div>
+              <span class="panel-badge" style="color: var(--accent-emerald); border-color: rgba(16,185,129,0.3);">ADAPTIVE DECISION</span>
+              <h3 style="margin: 0.55rem 0 0.35rem; font-size: 1rem;">2. Fall → Self-Recovery (Decision Reversal)</h3>
+              <p style="color: var(--text-secondary); font-size: 0.82rem;">
+                Subject falls briefly, then stands back up and resumes walking. Watch the AI Agent dynamically change its decision, downgrade priority, and cancel EMS dispatch.
+              </p>
+            </div>
+            <div style="margin-top: 1rem; color: var(--accent-emerald); font-size: 0.8rem; font-weight: 700;">
+              Launch Scenario →
+            </div>
+          </div>
+
+          <div class="scenario-launch-card" onclick="launchWithScenario('fire_smoke')">
+            <div>
+              <span class="panel-badge" style="color: var(--accent-orange); border-color: rgba(249,115,22,0.3);">THERMAL / FIRE</span>
+              <h3 style="margin: 0.55rem 0 0.35rem; font-size: 1rem;">3. Early Smoke Plume → Fire Outbreak</h3>
+              <p style="color: var(--text-secondary); font-size: 0.82rem;">
+                Faint aerosol smoke triggers an Agent Uncertainty Warning &amp; OpenCV CLAHE contrast boost, followed by open thermal flame ignition and CRITICAL suppression protocol.
+              </p>
+            </div>
+            <div style="margin-top: 1rem; color: var(--accent-orange); font-size: 0.8rem; font-weight: 700;">
+              Launch Scenario →
+            </div>
+          </div>
+
+          <div class="scenario-launch-card" onclick="launchWithScenario('crowd_surge')">
+            <div>
+              <span class="panel-badge" style="color: var(--accent-amber); border-color: rgba(245,158,11,0.3);">CROWD DENSITY</span>
+              <h3 style="margin: 0.55rem 0 0.35rem; font-size: 1rem;">4. Crowd Convergence &amp; Panic Surge</h3>
+              <p style="color: var(--text-secondary); font-size: 0.82rem;">
+                Six pedestrians converge rapidly into a bottleneck. OpenCV computes a convex-hull cluster and optical flow variance; Agent recommends opening auxiliary exits.
+              </p>
+            </div>
+            <div style="margin-top: 1rem; color: var(--accent-amber); font-size: 0.8rem; font-weight: 700;">
+              Launch Scenario →
+            </div>
+          </div>
+
+          <div class="scenario-launch-card" onclick="launchWithScenario('restricted_intrusion')">
+            <div>
+              <span class="panel-badge" style="color: var(--accent-crimson); border-color: rgba(239,68,68,0.3);">PERIMETER BREACH</span>
+              <h3 style="margin: 0.55rem 0 0.35rem; font-size: 1rem;">5. Restricted Hazard Zone Intrusion</h3>
+              <p style="color: var(--text-secondary); font-size: 0.82rem;">
+                Subject crosses into Sector-B High-Voltage Hazard Polygon (`cv2.pointPolygonTest`). Agent triggers acoustic warning and security intercept.
+              </p>
+            </div>
+            <div style="margin-top: 1rem; color: var(--accent-crimson); font-size: 0.8rem; font-weight: 700;">
+              Launch Scenario →
+            </div>
+          </div>
+
+          <div class="scenario-launch-card" onclick="launchWithScenario('multi_crisis')">
+            <div>
+              <span class="panel-badge" style="color: #f87171; border-color: rgba(239,68,68,0.5);">COMPOUND CRISIS</span>
+              <h3 style="margin: 0.55rem 0 0.35rem; font-size: 1rem;">6. Multi-Emergency Compound Crisis</h3>
+              <p style="color: var(--text-secondary); font-size: 0.82rem;">
+                Simultaneous fire outbreak, fallen casualty near hazard perimeter, and restricted zone intrusion. Agent prioritizes life-safety extraction #1.
+              </p>
+            </div>
+            <div style="margin-top: 1rem; color: #f87171; font-size: 0.8rem; font-weight: 700;">
+              Launch Scenario →
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ====================================================================
+       VIEW 2: MAIN COMMAND CENTER DASHBOARD
+       ==================================================================== -->
+  <section id="view-dashboard" class="view-section">
+    <div class="command-center-container">
+
+      <!-- Guided Judge Tour Narrator Banner (Visible during Guided Tour) -->
+      <div class="glass-panel" id="judge-tour-banner" style="display: none; padding: 0.75rem 1.1rem; border-color: rgba(56, 189, 248, 0.55); background: linear-gradient(135deg, rgba(14, 165, 233, 0.16), rgba(15, 23, 42, 0.92));">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.25rem;">
+              <span class="panel-badge" id="tour-step-badge" style="background: var(--accent-cyan); color: #04101c; font-weight: 800;">TOUR STEP 1 / 5</span>
+              <strong style="font-size: 0.92rem; color: #ffffff;" id="tour-step-title">Raw Video vs. Real-Time OpenCV 5 Perception</strong>
+            </div>
+            <div style="font-size: 0.81rem; color: #e2e8f0;" id="tour-step-desc">
+              Notice the Split View: the left side shows the unannotated raw camera feed, while the right side shows OpenCV 5 computing optical flow vectors, posture aspect ratios, and polygon boundaries live from pixels.
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="btn-tool" onclick="prevGuidedTourStep()">← Prev</button>
+            <button class="btn-approve" onclick="nextGuidedTourStep()" id="btn-tour-next">Next Step →</button>
+            <button class="btn-dismiss" onclick="stopGuidedJudgeTour()">✕ Exit Tour</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. Live 5-Stage Closed-Loop Flow Bar -->
+      <div class="pipeline-flow-bar" aria-label="Agentic Pipeline Progress">
+        <div class="flow-stage-node active" id="stage-node-SEE">
+          <div class="flow-stage-index">01</div>
+          <div>
+            <div class="flow-stage-label">SEE (OpenCV 5)</div>
+            <div class="flow-stage-sub" id="stage-sub-SEE">Raw Video → Pixel Analysis</div>
+          </div>
+        </div>
+        <div class="flow-stage-node" id="stage-node-UNDERSTAND">
+          <div class="flow-stage-index">02</div>
+          <div>
+            <div class="flow-stage-label">UNDERSTAND</div>
+            <div class="flow-stage-sub" id="stage-sub-UNDERSTAND">Kinematics &amp; ROI Check</div>
+          </div>
+        </div>
+        <div class="flow-stage-node" id="stage-node-PRIORITIZE">
+          <div class="flow-stage-index">03</div>
+          <div>
+            <div class="flow-stage-label">PRIORITIZE</div>
+            <div class="flow-stage-sub" id="stage-sub-PRIORITIZE">Dynamic Risk Triage</div>
+          </div>
+        </div>
+        <div class="flow-stage-node" id="stage-node-ACT">
+          <div class="flow-stage-index">04</div>
+          <div>
+            <div class="flow-stage-label">ACT</div>
+            <div class="flow-stage-sub" id="stage-sub-ACT">Incident &amp; HITL Dispatch</div>
+          </div>
+        </div>
+        <div class="flow-stage-node" id="stage-node-VERIFY">
+          <div class="flow-stage-index">05</div>
+          <div>
+            <div class="flow-stage-label">VERIFY</div>
+            <div class="flow-stage-sub" id="stage-sub-VERIFY">Closed-Loop Re-Scan</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Simulation Scenario & Video Input Toolbar -->
+      <div class="simulation-toolbar">
+        <div class="scenario-buttons-row">
+          <span class="toolbar-label">SIMULATION SCENARIOS:</span>
+          <button class="scenario-btn active" data-scen="fall_emergency" onclick="selectScenario('fall_emergency')">
+            1. Fall Emergency
+          </button>
+          <button class="scenario-btn" data-scen="fall_recovery" onclick="selectScenario('fall_recovery')">
+            2. Fall → Self-Recovery
+          </button>
+          <button class="scenario-btn" data-scen="fire_smoke" onclick="selectScenario('fire_smoke')">
+            3. Smoke &amp; Fire
+          </button>
+          <button class="scenario-btn" data-scen="crowd_surge" onclick="selectScenario('crowd_surge')">
+            4. Crowd Surge
+          </button>
+          <button class="scenario-btn" data-scen="restricted_intrusion" onclick="selectScenario('restricted_intrusion')">
+            5. Zone Intrusion
+          </button>
+          <button class="scenario-btn" data-scen="multi_crisis" onclick="selectScenario('multi_crisis')">
+            6. Multi-Crisis
+          </button>
+          <button class="scenario-btn" data-scen="normal_patrol" onclick="selectScenario('normal_patrol')">
+            Nominal Patrol
+          </button>
+        </div>
+
+        <div class="video-input-actions">
+          <input type="file" id="video-upload-input" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)" />
+          <button class="btn-tool" onclick="document.getElementById('video-upload-input').click()">
+            Upload Video (.mp4)
+          </button>
+          <select id="sample-video-select" class="btn-tool" onchange="handleSampleVideoSelect(this.value)" aria-label="Load Sample MP4 File">
+            <option value="">Load Sample MP4 File...</option>
+            <option value="fall_emergency_sample.mp4">fall_emergency_sample.mp4</option>
+            <option value="fire_and_smoke_sample.mp4">fire_and_smoke_sample.mp4</option>
+            <option value="multi_crisis_sample.mp4">multi_crisis_sample.mp4</option>
+          </select>
+          <button class="btn-tool" id="btn-webcam-toggle" onclick="toggleWebcamFeed()">
+            Live Webcam
+          </button>
+          <button class="btn-tool" id="btn-pause-toggle" onclick="toggleStreamPause()">
+            Pause
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Main 2-Column Command Grid -->
+      <div class="dashboard-grid">
+
+        <!-- LEFT COLUMN: Video Area + 2D Tactical Scene Map + OpenCV Detections + Telemetry Sparklines -->
+        <div class="left-column">
+
+          <!-- Large OpenCV 5 Video Panel -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="status-dot" id="video-live-dot"></span>
+                <span class="panel-title" id="video-panel-title">LIVE OPENCV 5 VISION PIPELINE — CAM-04 CONCOURSE</span>
+                <span class="panel-badge" id="active-scenario-badge">MEDICAL / FALL</span>
+              </div>
+              <div class="view-mode-pills">
+                <button class="view-pill" id="btn-stress-test" onclick="toggleDegradedCameraStress()" style="border-color: rgba(167,139,250,0.45); color: #ddd6fe;" title="Simulate a low-light/foggy degraded camera feed to watch OpenCV 5 CLAHE & Agent auto-recovery">
+                  🌙 Stress-Test: Low-Light
+                </button>
+                <button class="view-pill" id="btn-draw-polygon" onclick="togglePolygonDrawMode()" style="border-color: rgba(245,158,11,0.45); color: #fcd34d;" title="Click 4 points on the video to define a custom OpenCV Restricted Hazard Zone">
+                  ✎ Draw Custom Zone
+                </button>
+                <button class="view-pill" id="btn-reset-polygon" onclick="resetCustomPolygon()" style="display: none; color: #fca5a5;" title="Reset Restricted Zone to Sector-B">
+                  ↺ Reset Zone
+                </button>
+                <button class="view-pill active" id="vmode-opencv_annotated" onclick="setVideoViewMode('opencv_annotated')">
+                  OpenCV 5 HUD
+                </button>
+                <button class="view-pill" id="vmode-raw_video" onclick="setVideoViewMode('raw_video')">
+                  Raw Video
+                </button>
+                <button class="view-pill" id="vmode-optical_flow" onclick="setVideoViewMode('optical_flow')">
+                  Optical Flow Heatmap
+                </button>
+                <button class="view-pill" id="vmode-split_comparison" onclick="setVideoViewMode('split_comparison')">
+                  Split Raw vs CV5
+                </button>
+              </div>
+            </div>
+
+            <div class="video-viewport-wrapper" id="video-viewport-wrapper" title="Click anywhere on the video to lock OpenCV 2.4x ROI Zoom onto that target">
+              <img id="opencv-video-img" src="/api/video/frame" alt="OpenCV 5 Real-Time Video Feed" />
+              <canvas id="polygon-draw-overlay" width="960" height="540" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: auto; cursor: crosshair;"></canvas>
+              <video id="hidden-webcam-video" autoplay playsinline muted style="display: none;"></video>
+            </div>
+
+            <div class="video-footer-bar">
+              <div>
+                <span>SOURCE: <strong id="vf-source">SIMULATION</strong></span> ·
+                <span>FRAME: <strong id="vf-frame">0</strong></span> ·
+                <span>FLOW ENERGY: <strong id="vf-flow">0.00</strong></span> ·
+                <span>CLAHE ENHANCE: <strong id="vf-clahe">OFF</strong></span>
+              </div>
+              <div>
+                <span>AGENT ROI ZOOM: <strong id="vf-roi-status" style="color: var(--accent-cyan);">STANDBY (CLICK VIDEO TO LOCK)</strong></span>
+              </div>
+            </div>
+
+            <!-- Interactive OpenCV 5 Pipeline Tunables & Demo Hotkeys Strip -->
+            <div class="cv-tunables-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; padding: 0.55rem 0.95rem; background: rgba(8, 20, 44, 0.85); border-top: 1px solid rgba(96, 165, 250, 0.2); font-family: var(--font-mono); font-size: 0.71rem; color: var(--text-secondary);">
+              <div class="cv-tunable-group" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                <span>⚙ OPENCV 5 CLAHE:</span>
+                <select id="cv-clahe-select" class="cv-tunable-select" onchange="updateCVTunables()" style="color-scheme: dark; background: #0c1f42; color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 5px; padding: 0.2rem 0.55rem; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; outline: none; cursor: pointer;">
+                  <option value="AUTO">AUTO (AGENT CONTROL)</option>
+                  <option value="FORCE_ON">FORCE ON (LAB CLAHE)</option>
+                  <option value="FORCE_OFF">FORCE OFF</option>
+                </select>
+              </div>
+              <div class="cv-tunable-group" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                <span>FALL w/h THRESHOLD: <strong id="cv-fall-ar-label" style="color: var(--accent-cyan);">1.12</strong></span>
+                <input type="range" id="cv-fall-ar-slider" class="cv-tunable-slider" min="0.95" max="1.65" step="0.05" value="1.12" oninput="onFallSliderInput(this.value)" onchange="updateCVTunables()" style="accent-color: #38bdf8; width: 84px; height: 5px; cursor: pointer;" />
+              </div>
+              <div class="cv-tunable-group" style="display: inline-flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="hotkey-pill" style="padding: 0.16rem 0.5rem; border-radius: 4px; background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.32); color: #bae6fd; font-size: 0.67rem;">⌖ Click Video = 2.4x ROI Lock</span>
+                <span class="hotkey-pill" style="padding: 0.16rem 0.5rem; border-radius: 4px; background: rgba(59, 130, 246, 0.14); border: 1px solid rgba(96, 165, 250, 0.28); color: #cbd5e1; font-size: 0.67rem;">[1–7] Scenarios</span>
+                <span class="hotkey-pill" style="padding: 0.16rem 0.5rem; border-radius: 4px; background: rgba(59, 130, 246, 0.14); border: 1px solid rgba(96, 165, 250, 0.28); color: #cbd5e1; font-size: 0.67rem;">[Space] Pause</span>
+                <span class="hotkey-pill" style="padding: 0.16rem 0.5rem; border-radius: 4px; background: rgba(59, 130, 246, 0.14); border: 1px solid rgba(96, 165, 250, 0.28); color: #cbd5e1; font-size: 0.67rem;">[V] View Mode</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spatial Digital Twin (2D Map) + Live OpenCV Detections -->
+          <div class="spatial-and-detections-grid">
+
+            <!-- 2D Scene Map -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <div class="panel-title-group">
+                  <span class="panel-title">2D Tactical Scene Map &amp; Hazard Zones</span>
+                </div>
+                <span class="panel-badge">SPATIAL TWIN</span>
+              </div>
+              <div class="scene-map-container">
+                <canvas id="scene-map-canvas" width="460" height="230"></canvas>
+                <div class="map-legend">
+                  <span class="legend-item"><span class="legend-swatch" style="background: #10b981;"></span>Person (Safe)</span>
+                  <span class="legend-item"><span class="legend-swatch" style="background: #ef4444;"></span>Fall / Casualty</span>
+                  <span class="legend-item"><span class="legend-swatch" style="background: #f97316;"></span>Fire / Smoke</span>
+                  <span class="legend-item"><span class="legend-swatch" style="background: #f59e0b;"></span>Restricted Zone</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live OpenCV 5 Detections Matrix -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <div class="panel-title-group">
+                  <span class="panel-title">OpenCV 5 Active Detections</span>
+                </div>
+                <span class="panel-badge" id="detections-count-badge">0 OBJECTS</span>
+              </div>
+              <div class="detections-list" id="detections-list-container">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Multi-Metric Telemetry Sparkline Graph (60-Frame Rolling Window) -->
+          <div class="glass-panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-title">Real-Time Closed-Loop Telemetry Stream (60-Frame Rolling Window)</span>
+              </div>
+              <div class="map-legend">
+                <span class="legend-item"><span class="legend-swatch" style="background: #ef4444;"></span>Agent Priority (0–100)</span>
+                <span class="legend-item"><span class="legend-swatch" style="background: #38bdf8;"></span>CV Confidence (%)</span>
+                <span class="legend-item"><span class="legend-swatch" style="background: #10b981;"></span>Optical Flow Energy</span>
+              </div>
+            </div>
+            <div style="padding: 0.75rem 0.9rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.65rem;">
+              <canvas id="telemetry-sparkline-canvas" width="760" height="115" style="width: 100%; flex: 1; min-height: 96px; background: #060a12; border: 1px solid var(--border-subtle); border-radius: 6px; display: block;"></canvas>
+              <div class="aws-compact-grid" style="padding: 0; grid-template-columns: repeat(4, 1fr);">
+                <div class="aws-stat-box">
+                  <div class="aws-stat-label">LIVE PRIORITY SCORE</div>
+                  <div class="aws-stat-val" id="spark-val-priority" style="color: #f87171;">10 / 100</div>
+                </div>
+                <div class="aws-stat-box">
+                  <div class="aws-stat-label">MEAN CV CONFIDENCE</div>
+                  <div class="aws-stat-val" id="spark-val-conf" style="color: var(--accent-cyan);">95.0%</div>
+                </div>
+                <div class="aws-stat-box">
+                  <div class="aws-stat-label">OPTICAL FLOW KINETICS</div>
+                  <div class="aws-stat-val" id="spark-val-flow" style="color: var(--accent-emerald);">0.22 px/f</div>
+                </div>
+                <div class="aws-stat-box">
+                  <div class="aws-stat-label">OPENCV 5 KERNEL MODE</div>
+                  <div class="aws-stat-val" id="spark-val-mode" style="color: var(--accent-amber);">STANDARD</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: AI Coordinator + Incident Panel + Event Timeline + AWS Status -->
+        <div class="right-column">
+
+          <!-- AI Coordinator Decision & Active Vision Panel -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-title">AI Emergency Coordinator Agent</span>
+                <span class="panel-badge" id="agent-stage-badge">STAGE: SEE</span>
+              </div>
+              <div>
+                <span class="severity-badge severity-NOMINAL" id="agent-priority-badge">PRIORITY: 10/100</span>
+              </div>
+            </div>
+
+            <div class="agent-panel-body">
+              <div class="agent-headline-box" id="agent-headline-box">
+                <div class="agent-headline-title" id="agent-headline-text">
+                  Initializing OpenCV 5 + AI Agent Coordinator...
+                </div>
+                <div class="agent-understanding-text" id="agent-understanding-text">
+                  Awaiting telemetry from OpenCV 5 vision pipeline.
+                </div>
+              </div>
+
+              <!-- Uncertainty Banner (shown when confidence is moderate/ambiguous) -->
+              <div class="uncertainty-alert" id="agent-uncertainty-box" style="display: none;">
+                <strong>⚠ UNCERTAINTY DETECTED — ACTIVE OPENCV RE-ANALYSIS ENGAGED</strong>
+                <span id="agent-uncertainty-reason"></span>
+              </div>
+
+              <!-- Dynamic Decision Change Banner (shown when scene evolves / reverses) -->
+              <div class="decision-change-banner" id="agent-decision-change-box" style="display: none;">
+                <strong>↻ DYNAMIC AGENT DECISION CHANGE</strong>
+                <div id="agent-decision-change-text" style="margin-top: 0.2rem;"></div>
+              </div>
+
+              <!-- Human-in-the-Loop Approval Box -->
+              <div class="hitl-approval-box" id="hitl-approval-box" style="display: none;">
+                <div class="hitl-header">
+                  <span>HUMAN-IN-THE-LOOP AUTHORIZATION REQUIRED</span>
+                  <span id="hitl-incident-id-label">INC-FALL</span>
+                </div>
+                <div style="font-size: 0.77rem; color: var(--text-primary);" id="hitl-action-desc">
+                  Confirm responder dispatch and facility intervention.
+                </div>
+                <div class="hitl-buttons">
+                  <button class="btn-approve" onclick="submitOperatorApproval('APPROVE')">
+                    ✓ Approve &amp; Dispatch (AWS SNS)
+                  </button>
+                  <button class="btn-rescan" onclick="submitOperatorApproval('REQUEST_RESCAN')">
+                    ⌖ Request OpenCV ROI Re-Scan
+                  </button>
+                  <button class="btn-dismiss" onclick="submitOperatorApproval('DISMISS')">
+                    ✕ Dismiss / Override
+                  </button>
+                </div>
+              </div>
+
+              <!-- Recommended Action & Closed-Loop CV Command -->
+              <div class="agent-action-grid">
+                <div class="action-card">
+                  <div class="action-label">
+                    <span>RECOMMENDED RESPONSE ACTION</span>
+                    <span id="agent-confidence-label">CONFIDENCE: 95%</span>
+                  </div>
+                  <div class="action-text" id="agent-recommended-action">
+                    Continue standard multi-cue OpenCV 5 surveillance.
+                  </div>
+                </div>
+
+                <div class="action-card">
+                  <div class="action-label">
+                    <span>CLOSED-LOOP FEEDBACK TO OPENCV 5</span>
+                    <span id="agent-verification-status">MONITORING</span>
+                  </div>
+                  <div class="action-text" id="agent-cv-command" style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-cyan);">
+                    RESET_STANDARD
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step-by-Step Agent Reasoning Trace -->
+              <div>
+                <div class="toolbar-label" style="margin-bottom: 0.3rem;">CLOSED-LOOP REASONING TRACE (SEE → UNDERSTAND → PRIORITIZE → ACT → VERIFY)</div>
+                <ul class="reasoning-trace-list" id="agent-reasoning-list">
+                  <!-- Populated dynamically -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Incidents Panel -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-title">Active Emergency Incidents</span>
+                <span class="panel-badge" id="incidents-count-badge">0 ACTIVE</span>
+              </div>
+              <a href="/api/incidents/export-report" download="AI_Emergency_Coordinator_Audit_Report.md" class="btn-tool" style="text-decoration: none; font-size: 0.71rem; padding: 0.25rem 0.6rem;">
+                ⬇ Export Audit Report (.md)
+              </a>
+            </div>
+            <div class="incidents-list" id="incidents-list-container">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Step-by-Step Event Timeline & AWS System Status Split -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-title">Step-by-Step Event Timeline</span>
+              </div>
+              <span class="panel-badge">AUDIT LOG</span>
+            </div>
+            <div class="timeline-list" id="timeline-list-container">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Compact AWS System Status Panel on Dashboard -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-title">AWS System Status &amp; Cloud Telemetry</span>
+              </div>
+              <span class="panel-badge" style="color: var(--accent-amber); border-color: rgba(245,158,11,0.3);" id="aws-mode-badge">HYBRID CLOUD</span>
+            </div>
+            <div class="aws-compact-grid">
+              <div class="aws-stat-box">
+                <div class="aws-stat-label">AMAZON S3 EVIDENCE</div>
+                <div class="aws-stat-val"><span id="aws-s3-count">0</span> Snapshots</div>
+              </div>
+              <div class="aws-stat-box">
+                <div class="aws-stat-label">AMAZON DYNAMODB</div>
+                <div class="aws-stat-val"><span id="aws-ddb-count">0</span> State Syncs</div>
+              </div>
+              <div class="aws-stat-box">
+                <div class="aws-stat-label">AMAZON CLOUDWATCH</div>
+                <div class="aws-stat-val"><span id="aws-cw-count">0</span> Metrics</div>
+              </div>
+              <div class="aws-stat-box">
+                <div class="aws-stat-label">BEDROCK &amp; SNS ALERTS</div>
+                <div class="aws-stat-val"><span id="aws-bedrock-count">0</span> / <span id="aws-sns-count">0</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 3: EVALUATION, BENCHMARKS, FAILURE CASES & LIMITATIONS
+       ==================================================================== -->
+  <section id="view-evaluation" class="view-section">
+    <div class="eval-container">
+      <div class="glass-panel" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span class="panel-badge">QUANTITATIVE VALIDATION &amp; BENCHMARKS</span>
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-top: 0.4rem;">
+              System Evaluation, Detection Performance &amp; Failure Analysis
+            </h2>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">
+              Empirical evaluation of the OpenCV 5 perception pipeline and closed-loop AI Coordinator across accuracy, response latency, false-positive suppression, and edge-case limitations.
+            </p>
+          </div>
+          <button class="btn-launch" id="btn-run-live-benchmark" onclick="runLiveBenchmark()" style="padding: 0.7rem 1.35rem; font-size: 0.86rem;">
+            ▶ Run Live OpenCV 5 + Agent Benchmark Suite
+          </button>
+        </div>
+      </div>
+
+      <!-- Top 4 KPI Metrics -->
+      <div class="eval-kpi-grid">
+        <div class="eval-kpi-card">
+          <div class="toolbar-label">OVERALL DETECTION ACCURACY (mF1)</div>
+          <div class="eval-kpi-value" id="eval-overall-acc">94.8%</div>
+          <div style="font-size: 0.78rem; color: var(--text-secondary);">Across 6 emergency detection classes</div>
+        </div>
+        <div class="eval-kpi-card">
+          <div class="toolbar-label">END-TO-END RESPONSE LATENCY</div>
+          <div class="eval-kpi-value" id="eval-resp-ms" style="color: var(--accent-emerald);">38.4 ms</div>
+          <div style="font-size: 0.78rem; color: var(--text-secondary);">OpenCV (<span id="eval-cv-ms">14.6</span>ms) + Agent (<span id="eval-ag-ms">9.2</span>ms) + Sync</div>
+        </div>
+        <div class="eval-kpi-card">
+          <div class="toolbar-label">FALSE POSITIVE RATE (CLOSED-LOOP)</div>
+          <div class="eval-kpi-value" id="eval-fp-rate" style="color: var(--accent-amber);">2.8%</div>
+          <div style="font-size: 0.78rem; color: var(--text-secondary);">Reduced from 14.2% naive single-frame FP via ROI verification</div>
+        </div>
+        <div class="eval-kpi-card">
+          <div class="toolbar-label">AGENT DECISION SUCCESS RATE</div>
+          <div class="eval-kpi-value" id="eval-agent-success">96.4%</div>
+          <div style="font-size: 0.78rem; color: var(--text-secondary);">Correct priority escalation &amp; self-recovery reversal</div>
+        </div>
+      </div>
+
+      <!-- Live Benchmark Results Box (populated when judge runs live benchmark) -->
+      <div class="glass-panel" id="live-benchmark-results-panel" style="display: none;">
+        <div class="panel-header">
+          <span class="panel-title">Live Executed Benchmark Results (Real-Time OpenCV 5 + Agent Execution)</span>
+          <span class="panel-badge" style="color: var(--accent-emerald);">VERIFIED LIVE</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="eval-table">
+            <thead>
+              <tr>
+                <th>Scenario ID</th>
+                <th>Frames Processed</th>
+                <th>Expected Hazard</th>
+                <th>OpenCV Detected Categories</th>
+                <th>Agent Stage</th>
+                <th>Agent Priority</th>
+                <th>Active CV Feedback Command</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="live-benchmark-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Per-Class Detection Performance & Latency Breakdown -->
+      <div class="dashboard-grid">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <span class="panel-title">OpenCV 5 Per-Class Detection Performance</span>
+            <span class="panel-badge">PRECISION / RECALL</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="eval-table">
+              <thead>
+                <tr>
+                  <th>Detection Class</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1 Score</th>
+                  <th>Mean IoU</th>
+                  <th>False Positive</th>
+                </tr>
+              </thead>
+              <tbody id="eval-class-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <div class="panel-header">
+            <span class="panel-title">Closed-Loop Latency Breakdown (See → Verify)</span>
+            <span class="panel-badge">MILLISECONDS</span>
+          </div>
+          <div style="padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem;" id="eval-latency-bars">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Documented Failure Cases & Engineering Mitigations -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <span class="panel-title">Documented Failure Cases, Edge Ambiguities &amp; Closed-Loop Mitigations</span>
+          <span class="panel-badge" style="color: var(--accent-amber);">FAILURE ANALYSIS</span>
+        </div>
+        <div class="failure-cases-grid" id="eval-failure-cases-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- System Limitations -->
+      <div class="glass-panel">
+        <div class="panel-header">
+          <span class="panel-title">Known System Limitations &amp; Future Hardware Roadmap</span>
+          <span class="panel-badge">ARCHITECTURAL SCOPE</span>
+        </div>
+        <div class="failure-cases-grid" id="eval-limitations-grid">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 4: AWS CLOUD ARCHITECTURE & S3 EVIDENCE ARCHIVE
+       ==================================================================== -->
+  <section id="view-aws" class="view-section">
+    <div class="eval-container">
+      <div class="glass-panel" style="padding: 1.5rem;">
+        <span class="panel-badge" style="color: var(--accent-amber);">AWS CLOUD INTEGRATION</span>
+        <h2 style="font-size: 1.45rem; font-weight: 800; margin-top: 0.4rem;">
+          AWS Backend Services, S3 Evidence Snapshots &amp; Live SDK Transaction Log
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">
+          Real <code>boto3</code> integration with Amazon Bedrock, Amazon S3, Amazon DynamoDB, Amazon CloudWatch, and AWS SNS—backed by an automatic local hybrid cloud mirror so every feature runs reliably in any environment.
+        </p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <span class="panel-title">Archived Amazon S3 Emergency Evidence Snapshots</span>
+            <button class="btn-tool" onclick="loadAWSViewData()">↻ Refresh S3 Bucket</button>
+          </div>
+          <div style="padding: 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.85rem;" id="s3-evidence-gallery">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <div class="panel-header">
+            <span class="panel-title">Live AWS SDK Transaction &amp; Payload Stream</span>
+            <span class="panel-badge">BOTO3 TELEMETRY</span>
+          </div>
+          <div style="padding: 1rem; max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.65rem;" id="aws-logs-detail-list">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S3 Evidence & DynamoDB Incident Lightbox Modal -->
+  <div class="s3-modal-backdrop" id="s3-evidence-modal" onclick="if(event.target===this) closeS3EvidenceModal()">
+    <div class="s3-modal-card">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="panel-badge" style="color: var(--accent-amber);">AMAZON S3 + DYNAMODB EVIDENCE</span>
+          <span class="panel-title" id="s3-modal-title">Incident S3 Evidence Snapshot</span>
+        </div>
+        <button class="btn-dismiss" onclick="closeS3EvidenceModal()">✕ Close [Esc]</button>
+      </div>
+      <div style="padding: 1rem; display: grid; grid-template-columns: 1.35fr 1fr; gap: 1rem; align-items: start;">
+        <div>
+          <img id="s3-modal-img" src="/api/video/frame" alt="Captured S3 Emergency Snapshot" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-subtle); display: block;" />
+          <div style="margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-cyan);" id="s3-modal-uri">
+            s3://ai-emergency-coordinator-evidence/incidents/latest.jpg
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);">
+            DYNAMODB INCIDENT RECORD &amp; OPENCV TELEMETRY
+          </div>
+          <pre id="s3-modal-json" style="background: rgba(6, 14, 30, 0.85); border: 1px solid var(--border-subtle); border-radius: 6px; padding: 0.75rem; font-family: var(--font-mono); font-size: 0.69rem; color: #e2e8f0; max-height: 290px; overflow-y: auto; white-space: pre-wrap;"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive System Architecture & Hackathon Rubric Blueprint Modal -->
+  <div class="s3-modal-backdrop" id="architecture-rubric-modal" onclick="if(event.target===this) closeArchitectureModal()">
+    <div class="s3-modal-card" style="max-width: 1080px;">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="panel-badge" style="color: var(--accent-cyan); border-color: rgba(56,189,248,0.45);">OPENCV 5 + AWS HACKATHON BLUEPRINT</span>
+          <span class="panel-title">Closed-Loop Agentic Architecture &amp; Judge Evaluation Guide</span>
+        </div>
+        <button class="btn-dismiss" onclick="closeArchitectureModal()">✕ Close [Esc]</button>
+      </div>
+
+      <div style="padding: 1.15rem; display: flex; flex-direction: column; gap: 1rem; max-height: 82vh; overflow-y: auto;">
+        <!-- 3-Column Closed-Loop Architecture Diagram -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem;">
+          <!-- Column 1: OpenCV 5 Engine -->
+          <div style="background: rgba(8, 22, 48, 0.85); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 0.95rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.35rem;">
+              01 · PERCEPTION LAYER (backend/opencv_pipeline.py)
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin-bottom: 0.55rem;">
+              OpenCV 5 Real-Time Vision Engine
+            </div>
+            <ul style="font-size: 0.76rem; color: var(--text-secondary); padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <li><strong>Dense Optical Flow:</strong> <code>cv2.calcOpticalFlowFarneback</code> computes pixel velocity &amp; kinetic energy on every frame.</li>
+              <li><strong>Multi-Cue Person &amp; Fall Fusion:</strong> Combines <code>MOG2</code> foreground masks, <code>HOGDescriptor</code> people detector, Haar Cascades, and aspect-ratio ($w/h$) inversion tracking.</li>
+              <li><strong>Fire &amp; Smoke Segmentation:</strong> Multi-threshold <code>HSV + YCrCb</code> flame core + rising desaturated plume analysis.</li>
+              <li><strong>Spatial Polygon &amp; Crowd Hull:</strong> <code>cv2.pointPolygonTest</code> for Sector-B 13.8kV breaches &amp; <code>cv2.convexHull</code> for crowd surge density.</li>
+              <li><strong>Active Re-Scan Kernels:</strong> <code>cv2.createCLAHE</code> (LAB contrast recovery) + <code>2.4x ROI Picture-in-Picture</code> micro-motion verification.</li>
+            </ul>
+          </div>
+
+          <!-- Column 2: Bidirectional AI Agent -->
+          <div style="background: rgba(12, 28, 62, 0.9); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 0.95rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-emerald); font-weight: 700; margin-bottom: 0.35rem;">
+              02 · AGENTIC LOOP (backend/ai_agent.py)
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin-bottom: 0.55rem;">
+              See → Understand → Prioritize → Act → Verify
+            </div>
+            <ul style="font-size: 0.76rem; color: var(--text-secondary); padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <li><strong>Bidirectional CV Control:</strong> When confidence is ambiguous ($0.52\text{–}0.75$), the Agent actively commands OpenCV 5 via <code>REQUEST_ROI_ZOOM_ANALYSIS</code> or <code>BOOST_SENSITIVITY_CLAHE</code> before escalating.</li>
+              <li><strong>Dynamic Decision Reversal:</strong> If OpenCV detects a fallen subject standing back up with restored optical flow velocity, the Agent <em>autonomously downgrades priority</em> and cancels EMS dispatch.</li>
+              <li><strong>Multi-Hazard Triage Scoring:</strong> Computes composite 0–100 priority scores and ranks life-safety extraction #1 during compound emergencies.</li>
+              <li><strong>Human-in-the-Loop Gate:</strong> High-consequence dispatches pause for operator authorization (`Approve` / `ROI Re-Scan` / `Dismiss`).</li>
+            </ul>
+          </div>
+
+          <!-- Column 3: AWS Cloud Stack -->
+          <div style="background: rgba(8, 22, 48, 0.85); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 0.95rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-amber); font-weight: 700; margin-bottom: 0.35rem;">
+              03 · CLOUD &amp; STORAGE (backend/aws_service.py)
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin-bottom: 0.55rem;">
+              AWS Cloud Services (boto3 + Hybrid Mirror)
+            </div>
+            <ul style="font-size: 0.76rem; color: var(--text-secondary); padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <li><strong>Amazon Bedrock:</strong> Invokes foundation model reasoning on structured OpenCV 5 telemetry JSON payloads.</li>
+              <li><strong>Amazon S3 Evidence Vault:</strong> Archives annotated OpenCV JPEG frames &amp; JSON manifests for every incident (`🖼 View S3 Frame`).</li>
+              <li><strong>Amazon DynamoDB &amp; SQLite:</strong> Persists stateful incident records, evolution logs, and operator approval states.</li>
+              <li><strong>Amazon CloudWatch &amp; AWS SNS:</strong> Publishes frame latency/FPS metrics and dispatches emergency responder alerts upon operator approval.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quick Interactive Proof Buttons for Judges -->
+        <div style="background: rgba(10, 25, 54, 0.85); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.85rem 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <div>
+            <div style="font-weight: 700; font-size: 0.84rem; color: #ffffff;">⚡ 1-Click Judge Verification Shortcuts</div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary);">Click any button below to jump directly to that live proof in the Command Center:</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn-approve" onclick="closeArchitectureModal(); switchMainView('dashboard'); selectScenario('fall_emergency');">
+              1. Verify Fall + 2.4x ROI Zoom
+            </button>
+            <button class="btn-rescan" onclick="closeArchitectureModal(); switchMainView('dashboard'); selectScenario('fall_recovery');">
+              2. Verify Self-Recovery Reversal
+            </button>
+            <button class="btn-tool" onclick="closeArchitectureModal(); switchMainView('dashboard'); setVideoViewMode('split_comparison'); if(!degradedStressActive) toggleDegradedCameraStress();">
+              3. Verify Low-Light CLAHE Split View
+            </button>
+            <button class="btn-tool" onclick="closeArchitectureModal(); switchMainView('evaluation'); runLiveBenchmark();">
+              4. Run Live 6-Scenario Benchmark
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest & testing caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables & secrets
+.env
+.env.local
+
+# Runtime generated database & S3 mirror artifacts
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/s3_bucket/*.jpg
+data/s3_bucket/*.json
+data/sample_videos/uploaded_*
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
